@@ -1,0 +1,424 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Translate Me</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="rcs/css_reset.css" type="text/css" />
+<script src="rcs/jquery.min.js"></script>
+<script src="printThis.js"></script>
+
+ 
+
+<style type="text/css">
+body {
+	background: url(rcs/bg_01.jpg) repeat-y 0px 0px;
+	background-size: cover;
+	font-family: "Myriad Pro";
+}
+h1 {
+	font-size: 40px;
+	width: 250px;
+	 
+	display: block;
+	background: #fff;
+	color: #57638a;
+	text-align: center;
+	height: 60px;
+	border: #a6d0fc solid 1px;
+	border-radius: 50px;
+	padding-left: 35px;
+	padding-right: 35px;
+	line-height: 65px;
+	margin: 0 auto;
+	margin-top: 20px;
+	box-shadow: 0 0 2px 0px rgba(32,81,132,0.5);
+}
+a.clear {
+	text-decoration: none;
+	float: right;
+	width: 45px;
+	height: 45px;
+	display: inline-block;
+	border-radius: 100%;
+	margin-right: 75px;
+	margin-top: -50px;
+	font-size: 30px;
+	line-height: 55px;
+	color: #fff;
+	text-align: center;
+	display: none;
+	background: rgba(220,63,63,1) url(rcs/img_delete.png) center center no-repeat;
+	background-size: 25px 25px;
+}
+#canvas_cnt {
+	width: 90%;
+	/*min-height: 450px;*/
+	display: block;
+	margin: 0 auto;
+	margin-top: 30px;
+	background: #fff;
+	border-radius: 8px;
+	border: rgba(178,178,178,0.55) solid 1px;
+	box-shadow: 0 0 6px 0px rgba(32,81,132,0.3);
+}
+#canvas_cnt canvas {
+	background: 1 red;
+	width: auto;
+	border-radius: 6px;
+	margin: 0 auto;
+}
+#text_cnt {
+	width: 90%;
+	min-height: 450px;
+	display: block;
+	margin: 0 auto;
+	margin-top: 30px;
+}
+.text_cnt {
+	width: 45%;
+	min-height: 428px;
+	display: block;
+	margin: 0 auto;
+	background: #fff;
+	border-radius: 8px;
+	border: rgba(178,178,178,0.55) solid 1px;
+	box-shadow: 0 0 6px 0px rgba(32,81,132,0.3);
+	float: left;
+}
+.hdr_bg {
+	background: url(rcs/bg_02.png) 0px bottom repeat-x;
+	height: 33px;
+	width: 100%;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	border-bottom: rgba(178,178,178,0.65) solid 1px;
+	color: #333;
+	font-size: 16px;
+	line-height: 34px;
+	padding-left: 10px;
+	box-sizing: border-box;
+}
+a.btn_main {
+	width: 185px;
+	text-align: center;
+	font-size: 25px;
+	color: #fff;
+	text-align: center;
+	background: #334788;
+	display: inline-block;
+	border-radius: 4px;
+	display: block;
+	text-decoration: none;
+	line-height: 46px;
+	height: 42px;
+	margin: 0 auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+a.btn_main:hover {
+	background: #003366;
+	transition: background 0.3s ease-in-out 0s;
+}
+a.print_btn {
+	background: url(rcs/img_print.png) 10px 7px no-repeat;
+	display: inline-block;
+	float: right;
+	width: 40px;
+	height: 33px;
+	text-decoration: none;
+	background-size: 20px 20px;
+	border-right: #ccc solid 1px;
+	border-left: #ccc solid 1px;
+}
+a.print_btn:active {
+	box-shadow: 0 0px 6px rgba(0, 0, 0, 0.3) inset;
+}
+a.save_btn {
+	background: url(rcs/img_save.png) 14px 7px no-repeat;
+	display: inline-block;
+	float: right;
+	width: 50px;
+	height: 33px;
+	text-decoration: none;
+	background-size: 20px 20px;
+	border-top-right-radius: 6px;
+}
+a.save_btn:active {
+	box-shadow: 0 0px 6px rgba(0, 0, 0, 0.3) inset;
+}
+.can_size {
+	color: #000;
+	float: right;
+}
+.can_size span {
+	color: #ababab;
+	font-size: 15px;
+}
+.can_size input {
+	font-size: 16px;
+	width: 45px;
+	height: 22px;
+	background: #fff;
+	border-radius: 4px;
+	border: rgba(0,0,0,0.30) solid 1px;
+	box-shadow: 0 0px 3px rgba(0, 0, 0, 0.3) inset;
+	margin-right: 10px;
+	outline: none;
+	text-align: center;
+}
+.textarea {
+	width: 100%;
+	border-radius: 4px;
+	outline: none;
+	height: 92%;
+	border: none;
+	resize: none;
+	padding: 15px;
+	font-size: 16px;
+	box-sizing: border-box;
+	background: 1red;
+}
+.textarea:focus {
+}
+.tr_txt {
+	width: 100%;
+	background: red1;
+	min-height: 160px;
+	font-size: 16px;
+	color: #000;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+#print_area { padding:10px; font-size:16px; text-align:left; }
+#canvas_cnt { width:450px; height:400px; }
+</style>
+
+<script>
+
+$(document).ready(function(e) {
+   
+	
+	$(document).on("click",".clear",function(e){
+		
+		e.preventDefault();
+		$("#showFR,#showNL").text("");
+		$("#meEnglish").val("");
+		$("#translateme,#make_image").hide();
+		  var c=document.getElementById("mycanvas");
+		 	  
+			ctx = c.getContext("2d");
+			ctx.clearRect(0, 0, c.width, c.height);
+		
+		
+		});
+ var txt="";
+	 
+	$(document).on("click","#make_image",function(e){
+		
+		e.preventDefault();
+		$("#text_cnt").hide();
+			$("#canvas_cnt,.translator_btn").show();
+			   txt = $("#showFR").html();
+			  $("#print_area").html(txt+"<br>"+$("#showNL").html());
+			 //  $("#print_area").html("Hello G Hello <br>Helo G Hello Salmaan Khan <br>Helo");
+			   
+			// fillCanvas(txt);
+		
+		});
+		
+		function fillCanvas(txt){
+			
+			 var c=document.getElementById("mycanvas");
+			 var ctx=c.getContext("2d");
+
+			 ctx.font="18px Myriad Pro";
+		 
+			 ctx.fillText(txt,10,50);
+			
+			
+			}
+		
+	$(document).on("click",".translator_btn",function(e){
+		
+		e.preventDefault();
+		$("#text_cnt").show();
+		$("#canvas_cnt,.translator_btn").hide();
+		
+		});
+		
+	$(document).on("click",".print_btn",function(e){
+		
+		e.preventDefault();
+	 	
+		
+	// var c=document.getElementById("mycanvas");
+			  
+			 
+   // var win=window.open();
+  //  win.document.write("<br><img src='"+c.toDataURL()+"'/>");
+  //  win.print();
+ //   win.location.reload();
+ 
+ 				var repeat = 4;
+ 				var rprint = $('#print_area').html();
+				var rprinth = $('#print_area').height()+"px";
+				var rprintw = $('#print_area').width()+"px";
+				//console.log(rprinth,rprintw);
+				
+				//$(repeat).each(function(index, element) {
+//                    
+//					$('#print_area').append('<div style="height:'+rprinth+'; width:'+rprintw+';">'+rprint+'</div>');
+//					console.log('<div style="height:'+rprinth+'; width:'+rprintw+';">'+rprint+'</div>');
+//					index = repeat;
+//					
+//                });
+				
+				 $('#print_area').printThis();
+				
+				
+				
+				
+		
+		
+		});	
+		
+		$(document).on("mousedown",".save_btn",function(e){
+		
+		e.preventDefault();
+	 	// var c=document.getElementById("mycanvas");
+//		  var dataURL = c.toDataURL('image/png');
+//		 $(this).attr('href',dataURL);
+   		 
+		 html2canvas($("#print_area"), {
+            onrendered: function(canvas) {
+                theCanvas = canvas;
+                document.body.appendChild(canvas);
+
+                // Convert and download as image 
+                Canvas2Image.saveAsPNG(canvas); 
+                $("body").append(canvas);
+                // Clean up 
+                //document.body.removeChild(canvas);
+            }
+        });
+		
+		});	
+		
+		$(document).on("keyup","#meEnglish",function(e){
+		
+				 if($(this).html()!=""){
+					 
+					 $("#translateme").show();
+					 
+					 }else { $("#translateme,#make_image,.clear").hide(); $("#showFR,#showNL").text("");}
+				 
+				 
+		});	
+		
+		
+		
+			$(document).on("keyup","#cn_width",function(e){
+		
+				var width =  Number($(this).val())*200;
+				//var c=document.getElementById("mycanvas");
+	 			//c.width=width;
+				$("#canvas_cnt").css("width",width+50);
+		 		//fillCanvas(txt);
+		});	
+		
+		$(document).on("keyup","#cn_height",function(e){
+		
+				 var height =  Number($(this).val())*200;
+				// var c=document.getElementById("mycanvas");
+	 			//c.height=height;
+				$("#canvas_cnt").css("height",height);
+				// fillCanvas(txt);
+		
+		});		
+		
+		
+	$(document).on("mousedown","#translateme",function(e){
+			
+			e.preventDefault();
+			var url = "https://translation.googleapis.com/language/translate/v2?key=AIzaSyD12Bf0r9jLpDpiRio_jlLEQ_lQglVHRa4";
+            url += "&source=" + "EN";
+            url += "&target=" + "FR";
+			url += "&format=" + "html";
+			url += "&q=" + escape($("#meEnglish").html());         
+            $.get(url, function (data, status) {
+                $("#showFR").html("FR: "+data.data.translations[0].translatedText);
+				 
+            });
+	 		
+			
+		
+	});	
+	
+		
+	$(document).on("mouseup","#translateme",function(e){
+			
+			e.preventDefault();
+			var url = "https://translation.googleapis.com/language/translate/v2?key=AIzaSyD12Bf0r9jLpDpiRio_jlLEQ_lQglVHRa4";
+            url += "&source=" + "EN";
+            url += "&target=" + "NL";
+			url += "&format=" + "html";
+            url += "&q=" + escape($("#meEnglish").html());
+            $.get(url, function (data, status) {
+                $("#showNL").html("NL: "+data.data.translations[0].translatedText);
+            });
+	 
+			$(".clear,#make_image").show();
+	});			
+		
+		
+		
+		
+	
+});
+
+
+
+</script>
+</head>
+
+<body>
+<h1>Translate Me</h1>
+<a href="#" class="clear"></a>
+<div id="canvas_cnt" style="display:none; "><!-- width:450px; height:400px;-->
+  <div class="hdr_bg">CANVAS <a href="#" class="save_btn" download="saveImage.png"></a><a href="#" class="print_btn" ></a>
+    <div class="can_size"><span>Width</span>
+      <input name="" type="text" maxlength="4"  id="cn_width" value="2"  />
+      <span>Height</span>
+      <input name="" type="text" maxlength="4" id="cn_height" value="2" />
+    </div>
+  </div>
+ <!-- <canvas id="mycanvas" width="400" height="400"></canvas>-->
+ <div id="print_area" style="width:100%; height:92%; border:#ccc solid 1px;  box-sizing:border-box; background1:red;"> </div>
+</div>
+<!--canvas_cnt--> 
+<a href="#" class="translator_btn btn_main" style="display:none;">Back</a>
+<div id="text_cnt">
+  <div class="text_cnt" style="margin-right:3%; width:48%; height:380PX;">
+    <div class="hdr_bg">ENGLISH</div>
+    <!--<textarea spellcheck="false" autofocus="autofocus" id="meEnglish"  ></textarea>-->
+    <div contenteditable="true" id="meEnglish" class="textarea"></div>
+    <a href="#" class="btn_main" id="translateme" style="display:none;">Translate</a> </div>
+  <!--text_cnt-->
+  
+  <div class="text_cnt" style="min-height:205px; width:48%;">
+    <div class="hdr_bg">FR</div>
+    <div class="tr_txt" id="showFR"></div>
+    
+  </div>
+  <!--text_cnt-->
+  
+  <div class="text_cnt" style="min-height:205px; width:48%; margin-top:15px;">
+    <div class="hdr_bg">NL</div>
+    <div class="tr_txt" id="showNL"></div>
+    <a href="#" class="btn_main" id="make_image" style="background:#f0a608; display:none; position:absolute; margin-left:190px; margin-top:30px; ">Make Canvas</a> </div>
+  <!--text_cnt--> 
+  
+</div>
+</body>
+</html>
